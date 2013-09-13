@@ -10,17 +10,14 @@ from alembic.command import downgrade as alembic_downgrade
 from alask.db import get_alembic_config, get_engine, Base
 from alask.web.app import app
 
+__all__ = 'manager', 'run'
+
 @Manager
 def manager(config=None):
     config = os.path.abspath(config)
     app.config.from_pyfile(config)
     assert 'DATABASE_URL' in app.config, 'DATABASE_URL missing in config.'
     return app
-
-
-@manager.option('--host', dest='host', default=None)
-def sound(host):
-    app.run(host=host)
 
 
 @manager.option('--message', '-m', dest='message', default=None)
@@ -49,5 +46,6 @@ def downgrade(revision):
 
 manager.add_option('-c', '--config', dest='config', required=True)
 
-if __name__ == '__main__':
+
+def run():
     manager.run()
