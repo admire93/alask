@@ -1,4 +1,4 @@
 alask
-=====
+-------
 
-alembic + flask boilerplate
+al[embic] + [fl]ask
