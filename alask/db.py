@@ -2,7 +2,7 @@ from flask import current_app
 from alembic.config import Config
 from alembic.script import ScriptDirectory
 from werkzeug.local import LocalProxy
-from sqlalchemy import Enum, create_engine
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy.ext.declarative import declarative_base
 
