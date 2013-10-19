@@ -3,34 +3,28 @@ alask
 
 alask (= al[embic] + [fl]ask) is boilerplate for flask.
 
-How to start
+Installation
 ---------------
 
-Before run `alaskic`, you MUST add configuration file.
-
-    $ touch example.cfg.py
-
-now you can run `alaskic`.
-
-    $ alaskic runserver -c example.cfg.py
-
-Implement custom commands
-----------------------------
-
-When you want to user your commands, you have to write your own script.
-and ont thing you have to do is import `alask.script.manager`.
-
-    # server.py
-    from alask.script import manager
-
-    @manager.option('--bar')
-    def foo():
-        print 'foo'
-
-`alask.script.manager` is instance of `flask.ext.script.Manager` for alask.
-after save your script as `server.py`, you can run `alaskic`
-commands with `server.py`.
+    $ git clone https://github.com/admire93/alask.git alask
+    $ virtualenv alask_venv
+    $ . ./alask_venv/bin/activate
+    $ cd alask
+    $ pip install .
 
 
-    $ python server.py foo --bar
-    foo
+Usage
+---------
+
+First of all, you have to intialize your project with `alaskic` command.
+this command will make `your_project` directory, 
+`manger.py` and `gen.cfg.py` files.
+
+    $ mkdir project
+    $ cd project
+    $ alaskic --name your_project
+    alaskic created!!
+
+Now you can use a alembic commands through `manager.py`
+
+    $ python manager.py --help
