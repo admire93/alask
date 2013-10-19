@@ -14,28 +14,27 @@ from alask.web.app import app
 __all__ = 'manager', 'run'
 
 
-configure_form = """
-    DEBUG = True
-
-    DATABASE_URL = '$DATABASE_URL'
-
-    ALEMBIC_SCRIPT_LOCATION = '$ALEMBIC_SCRIPT_LOCATION'
-"""
-
 @Manager
 def manager(config=None):
-    config = os.path.abspath(config)
-    app.config.from_pyfile(config)
-    assert 'DATABASE_URL' in app.config, 'DATABASE_URL missing in config.'
+    if config:
+        config = os.path.abspath(config)
+        app.config.from_pyfile(config)
+        assert 'DATABASE_URL' in app.config, 'DATABASE_URL missing in config.'
+
     return app
 
 
 @manager.command
 def new():
-    database_url = input('URL of database '
-                         '(eg. postgresql://user@localhost/dbname)')
-    alembic_script_location = input('Alembic script location MUST CONFIGURED'
-                                    '(eg. alask:migrations)')
+    configure_form = """
+DEBUG = True
+
+DATABASE_URL = '$DATABASE_URL'
+
+ALEMBIC_SCRIPT_LOCATION = '$ALEMBIC_SCRIPT_LOCATION'
+    """
+    database_url = raw_input('URL of database (eg. postgresql://user@localhost/dbname) > ')
+    alembic_script_location = raw_input('Alembic script location MUST CONFIGURED (eg. alask:migrations) > ')
     if not alembic_script_location:
         raise ValueError('ALEMBIC_SCRIPT_LOCATION MUST be added.')
 
@@ -72,7 +71,7 @@ def downgrade(revision):
     alembic_downgrade(config, revision)
 
 
-@manger.option('--range', '-n', dest=_range)
+@manager.option('--range', '-n', dest='_range')
 def history(_range=10):
     try:
         _range = int(_range)

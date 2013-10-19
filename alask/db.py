@@ -12,13 +12,17 @@ __all__ = ('Base', 'ensure_shutdown_session', 'get_engine', 'get_session',
 Base = declarative_base()
 
 def get_alembic_config(engine):
-    url = str(engine.url)
-    config = Config()
-    config.set_main_option('script_location',
-                           current_app.config['ALEMBIC_SCRIPT_LOCATION'])
-    config.set_main_option('sqlalchemy.url', url)
-    config.set_main_option('url', url)
-    return config, ScriptDirectory.from_config(config)
+    if engine is not None:
+        url = str(engine.url)
+        config = Config()
+        print __name__
+        config.set_main_option('script_location',
+                               current_app.config['ALEMBIC_SCRIPT_LOCATION'])
+        config.set_main_option('sqlalchemy.url', url)
+        config.set_main_option('url', url)
+        return config, ScriptDirectory.from_config(config)
+    else:
+        raise 'no engine founded. DATABASE_URL can be misconfigured.'
 
 
 def ensure_shutdown_session(app):
@@ -33,7 +37,8 @@ def ensure_shutdown_session(app):
 
 def get_engine(app=None):
     app = app if app else current_app
-    return create_engine(app.config['DATABASE_URL'])
+    if app.config.get('DATABASE_URL', None) is not None:
+        return create_engine(app.config.get('DATABASE_URL', None))
 
 
 def get_session():
