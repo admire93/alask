@@ -7,6 +7,7 @@ from alembic.command import upgrade as alembic_upgrade
 from alembic.command import downgrade as alembic_downgrade
 from alembic.command import history as alembic_history
 from alembic.command import branches as alembic_branch
+from alembic.command import current as alembic_current
 
 from $PROJECT_NAME.db import get_alembic_config, get_engine, Base
 from $PROJECT_NAME.web.app import app
@@ -62,6 +63,13 @@ def branches():
     engine = get_engine()
     config, _ = get_alembic_config(engine)
     return alembic_branch(config)
+
+@manager.command
+def current():
+    """Current revision."""
+    engine = get_engine()
+    config, _ = get_alembic_config(engine)
+    return alembic_current(config)
 
 
 manager.add_option('-c', '--config', dest='config', required=True)
