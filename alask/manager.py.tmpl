@@ -51,7 +51,7 @@ def downgrade(revision):
 def history(range_=10):
     """List of --range number of revision history."""
     try:
-        range_ = int(_range)
+        range_ = int(range_)
     except ValueError:
         print "range of history MUST be `int` not %s" % str(type(_range))
 
