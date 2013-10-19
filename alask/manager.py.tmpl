@@ -51,13 +51,13 @@ def downgrade(revision):
 def history(range_=10):
     """List of --range number of revision history."""
     try:
-        _range = int(_range)
+        range_ = int(_range)
     except ValueError:
         print "range of history MUST be `int` not %s" % str(type(_range))
 
     engine = get_engine()
     config, _ = get_alembic_config(engine)
-    return alembic_history(config, _range) 
+    return alembic_history(config, range_)
 
 
 manager.add_option('-c', '--config', dest='config', required=True)
