@@ -15,6 +15,7 @@ config = {
 
 parser = ArgumentParser(description="Start new project with alask.")
 parser.add_argument('--name', help='name of new project')
+parser.add_argument('--database-url', help='database url')
 
 args = parser.parse_args()
 
@@ -63,6 +64,9 @@ def create_structure(project_dir, alask_dir):
           config['ALEMBIC_SCRIPT_LOCATION']])
 def run():
     config['PROJECT_NAME'] = args.name
+    if args.database_url is None:
+        config['DATABASE_URL'] = 'rdbms://name@host/dbname'
+
     project_dir = os.path.join(os.getcwd(), config['PROJECT_NAME'])
     config['ALEMBIC_SCRIPT_LOCATION'] = os.path.join(project_dir, 'migrations')
     alask_dir = os.path.dirname(os.path.abspath(__file__))
