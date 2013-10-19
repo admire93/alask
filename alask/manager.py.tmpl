@@ -6,6 +6,7 @@ from alembic.command import revision as alembic_revision
 from alembic.command import upgrade as alembic_upgrade
 from alembic.command import downgrade as alembic_downgrade
 from alembic.command import history as alembic_history
+from alembic.command import branches as alembic_branch
 
 from $PROJECT_NAME.db import get_alembic_config, get_engine, Base
 from $PROJECT_NAME.web.app import app
@@ -47,19 +48,23 @@ def downgrade(revision):
     alembic_downgrade(config, revision)
 
 
-@manager.option('--range', '-n', dest='range_')
-def history(range_=10):
-    """List of --range number of revision history."""
-    try:
-        range_ = int(range_)
-    except ValueError:
-        print "range of history MUST be `int` not %s" % str(type(_range))
-
+@manager.command
+def history():
+    """List of revision history."""
     engine = get_engine()
     config, _ = get_alembic_config(engine)
-    return alembic_history(config, range_)
+    return alembic_history(config)
+
+
+@manager.command
+def branches():
+    """Show current un-spliced branch point."""
+    engine = get_engine()
+    config, _ = get_alembic_config(engine)
+    return alembic_branch(config)
 
 
 manager.add_option('-c', '--config', dest='config', required=True)
+
 if __name__ == '__main__':
     manager.run()
