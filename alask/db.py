@@ -2,7 +2,7 @@ from flask import current_app
 from alembic.config import Config
 from alembic.script import ScriptDirectory
 from werkzeug.local import LocalProxy
-from sqlalchemy import Enum, create_engine
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -15,7 +15,6 @@ def get_alembic_config(engine):
     if engine is not None:
         url = str(engine.url)
         config = Config()
-        print __name__
         config.set_main_option('script_location',
                                current_app.config['ALEMBIC_SCRIPT_LOCATION'])
         config.set_main_option('sqlalchemy.url', url)
