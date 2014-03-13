@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
 from pytest import fixture
+from flask import _request_ctx_stack, g
+from sqlalchemy.orm import sessionmaker
+
+from $PROJECT_NAME.web.app import app
+from $PROJECT_NAME.db import get_session, Base, get_engine
 
 
 @fixture
