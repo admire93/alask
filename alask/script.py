@@ -62,6 +62,10 @@ def create_structure(project_dir, alask_dir):
     call(['cp',
           os.path.join(alask_dir, 'migrations', 'script.py.mako'),
           config['ALEMBIC_SCRIPT_LOCATION']])
+    call(['cp', '-r', os.path.join(alask_dir, 'tests'),
+          os.path.join(project_dir, 'tests')])
+
+
 def run():
     config['PROJECT_NAME'] = args.name
     if args.database_url is None:
