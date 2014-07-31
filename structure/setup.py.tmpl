@@ -2,15 +2,15 @@
 from setuptools import setup, find_packages
 
 
-setup(name='flask-foil',
+setup(name='$PROJECT_NAME',
       version='0.0.1',
-      author='Kang Hyojun',
-      author_email='admire9@gmail.com',
+      author='$AUTHOR_NAME',
+      author_email='$AUTHOR_EMAIL',
       packages=find_packages(),
       install_requires=[
           'flask==0.10.1', 'flask-script==2.0.5', 'sqlalchemy==0.9.7',
           'pytest==2.6.0', 'tox', 'alembic'
       ],
       entry_points={
-          'console_scripts': ['foil = flask_foil:run']
+          'console_scripts': ['$PROJECT_NAME = manager.py']
       })
