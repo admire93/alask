@@ -16,8 +16,9 @@ __all__ = 'manager', 'run'
 
 @Manager
 def manager(config=None):
-    config = os.path.abspath(config)
-    app.config.from_pyfile(config)
+    if config is not None:
+        config = os.path.abspath(config)
+        app.config.from_pyfile(config)
     assert 'DATABASE_URL' in app.config, 'DATABASE_URL missing in config.'
     return app
 
@@ -71,6 +72,9 @@ def current():
     engine = get_engine()
     config, _ = get_alembic_config(engine)
     return alembic_current(config)
+
+
+manager.add_option('--config', '-c', dest='config')
 
 
 if __name__ == '__main__':
