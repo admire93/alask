@@ -9,9 +9,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 __all__ = ('Base', 'ensure_shutdown_session', 'get_engine', 'get_session',
            'get_alembic_config')
-Base = declarative_base()
-Session = sessionmaker()
-session = LocalProxy(get_session)
+
 
 def get_alembic_config(engine):
     if engine is not None:
@@ -48,3 +46,8 @@ def get_session(engine=None):
     if not hasattr(g, 'sess'):
         setattr(g, 'sess', Session(bind=engine))
     return getattr(g, 'sess')
+
+
+Base = declarative_base()
+Session = sessionmaker()
+session = LocalProxy(get_session)
